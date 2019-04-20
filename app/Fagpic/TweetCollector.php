@@ -7,16 +7,22 @@ use App\TwitterUser;
 use App\TwitterPicture;
 use App\TwitterHashtag;
 use App\HashtagRelation;
+use Illuminate\Support\Facades\Log;
 
 class TweetCollector
 {
     public function collect($statuses)
     {
-
         // Modelに格納する。
         foreach( $statuses as $status )
         {
-            // dd($status);
+            // 登録済みのtweetであればスキップ
+            if( $this->hasTweet($status['id']) )
+            {
+                Log::debug('id: '.$status['id'].'は既に登録済みtweetのためスキップします。');
+                continue;
+            }
+
             // tweet_users table
             if( !$this->hasUser($status['user_id']) )
             {
@@ -69,6 +75,11 @@ class TweetCollector
                 $tag_relation->save();
             }
         }
+    }
+    // tweetの存在チェック
+    private function hasTweet($id)
+    {
+        return Tweet::where('id', $id)->count() > 0;
     }
 
     // 指定idのtwitterユーザの存在チェック
