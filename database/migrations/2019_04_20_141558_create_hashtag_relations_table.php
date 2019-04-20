@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTwitterPicturesTable extends Migration
+class CreateHashtagRelationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,14 @@ class CreateTwitterPicturesTable extends Migration
      */
     public function up()
     {
-        Schema::create('twitter_pictures', function (Blueprint $table) {
+        Schema::create('hashtag_relations', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('file_path');
-            $table->string('url');
-            $table->unsignedInteger('size');
-            $table->unsignedInteger('failure_count');
             $table->unsignedBigInteger('tweet_id');
-            $table->timestamps('');
+            $table->unsignedInteger('hashtag_id');
+            $table->timestamps();
 
             $table->foreign('tweet_id')->references('id')->on('tweets');
+            $table->foreign('hashtag_id')->references('id')->on('twitter_hashtags');
         });
     }
 
@@ -33,6 +31,6 @@ class CreateTwitterPicturesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('twitter_pictures');
+        Schema::dropIfExists('hashtag_relations');
     }
 }
