@@ -20,6 +20,7 @@ class CreateTweetsTable extends Migration
             $table->timestamp('posted_at');
             $table->unsignedInteger('retweet_count');
             $table->unsignedInteger('favorite_count');
+            $table->string('tweet_url');
             $table->timestamps();
 
             $table->primary('id');

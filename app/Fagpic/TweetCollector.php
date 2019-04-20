@@ -42,6 +42,7 @@ class TweetCollector
             $tweet->posted_at = date('Y-m-d H:i:s', strtotime((string) $status['created_at']));
             $tweet->favorite_count = $status['favorite_count'];
             $tweet->retweet_count = $status['retweet_count'];
+            $tweet->tweet_url = 'https://twitter.com/'.$status['screen_name'].'/status/'.$status['id'];
             $tweet->save();
 
             // picture table
