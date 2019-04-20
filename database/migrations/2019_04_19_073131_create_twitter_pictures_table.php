@@ -15,7 +15,7 @@ class CreateTwitterPicturesTable extends Migration
     {
         Schema::create('twitter_pictures', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('file_path');
+            $table->string('file_path')->nullable();
             $table->string('url');
             $table->unsignedInteger('size');
             $table->unsignedInteger('failure_count');
