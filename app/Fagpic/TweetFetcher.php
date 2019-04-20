@@ -10,12 +10,9 @@ class TweetFetcher implements Fetcher
     protected $conn;
     protected $filter = '#フレームアームズ・ガール filter:images -RT';
 
-    public function __construct()
+    public function __construct($consumer_key, $consumer_secret)
     {
-        $this->conn = new TwitterOAuth(
-            config('twitter.consumer_key'),
-            config('twitter.consumer_secret')
-        );
+        $this->conn = new TwitterOAuth( $consumer_key,$consumer_secret);
     }
 
     /*  最新のツイートを取得する。 */

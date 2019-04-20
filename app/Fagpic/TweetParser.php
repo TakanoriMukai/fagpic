@@ -14,7 +14,6 @@ class TweetParser extends Parser
     /* GET search/tweets で取得した結果を渡す */
     public function parse( $object )
     {
-        echo( count($object->statuses));
         foreach( $object->statuses as $status )
         {
             // tweet階層
@@ -38,6 +37,7 @@ class TweetParser extends Parser
             
             $this->setData( [ 'id'    => $status->id,
                             'text'  => $status->text,
+                            'user_id'   => $status->user->id,
                             'name'  => $status->user->name,
                             'screen_name'   => $status->user->screen_name,
                             'created_at'    => $status->created_at,

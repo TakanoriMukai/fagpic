@@ -14,9 +14,10 @@ class HttpDownloader implements Downloader
 
         foreach($urls as $url)
         {
-            $save_name = basename($url);
+            // ファイル名にyyyymmddhhssをつける。
+            $save_name = date('YmdHis').'_'.basename($url);
             
-            $fp = fopen($url, 'r');
+            $fp = fopen($url, 'r');1
             $fpw = fopen($save_path.''.$save_name, 'w');
             $size = 0;
 
