@@ -19,6 +19,7 @@ class TweetFetcher implements Fetcher
     public function fetch()
     {
         $this->tweet_object = $this->conn->get("search/tweets", ["q" => $this->filter]);
+        dd($this->tweet_object);
     }
 
     /* 検索フィルタを設定する。 */
