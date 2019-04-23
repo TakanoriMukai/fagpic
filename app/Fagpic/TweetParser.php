@@ -27,7 +27,7 @@ class TweetParser extends Parser
             $urls = array();
             if( array_key_exists( 'media', $status->entities ))
             {
-                foreach( $status->entities->media as $media )
+                foreach( $status->extended_entities->media as $media )
                 {
                     // 画像url階層
                     array_push( $this->urls, [$status->id => $media->media_url_https] );

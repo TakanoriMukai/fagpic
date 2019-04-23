@@ -12,4 +12,6 @@
 */
 
 Route::get('/', 'FagpicController@main');
+Route::get('/main', 'FagpicController@main');
+Route::get('/main2', 'FagpicController@main2');
 

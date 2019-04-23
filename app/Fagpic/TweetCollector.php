@@ -19,7 +19,7 @@ class TweetCollector
             // 登録済みのtweetであればスキップ
             if( $this->hasTweet($status['id']) )
             {
-                Log::debug('id: '.$status['id'].'は既に登録済みtweetのためスキップします。');
+                Log::debug('       -> id: '.$status['id'].'は既に登録済みtweetのためスキップします。');
                 continue;
             }
 

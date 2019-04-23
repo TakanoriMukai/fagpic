@@ -19,4 +19,14 @@ class FagpicController extends Controller
 
         return view('layouts.main', ['pictures' => $pictures]);
     }
+
+    public function main2()
+    {
+        $tweets = (new Tweet)
+            ->join('twitter_users', 'tweets.user_id','=','twitter_users.id')
+            ->orderBy('tweets.id', 'desc')
+            ->get();
+
+        return view('layouts.main2',['tweets' => $tweets]);
+    }
 }

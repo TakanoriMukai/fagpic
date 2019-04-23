@@ -10,15 +10,22 @@
 @section('content')
 
 @foreach($pictures as $picture)
-<blockquote class="twitter-tweet" data-lang="ja">
-    <p lang="ja" dir="ltr">{{$picture->text}} 
-        <a href="{{$picture->url}}">{{$picture->url}}
-        </a>
-    </p>&mdash; {{$picture->name}} (@{{$picture->screen_name}}) 
-    <a href="{{$picture->tweet_url}}.'?ref_src=twsrc%5Etfw'">{{$picture->posted_at}}
-    </a>
-</blockquote> 
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+<div class="card-body">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="bs-component">
+                <div class="card mb-3">
+                    <div class="card-header"></div>
+                    <div class="card-body">
+                        <a href="{{$picture->url}}">
+                            <img class="card-img" src="{{$picture->url}}">{{$picture->url}}</img>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endforeach
 
 @endsection

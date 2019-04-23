@@ -7,17 +7,15 @@ class HttpDownloader implements Downloader
     const BUFFER_SIZE = 1024;
     private $save_paths = array();
 
-    public function download(array $urls, string $save_path)
+    public function download(string $url, string $save_path)
     {
         $total_size = 0;
         $faild_count = 0;
 
-        foreach($urls as $url)
-        {
             // ファイル名にyyyymmddhhssをつける。
             $save_name = date('YmdHis').'_'.basename($url);
             
-            $fp = fopen($url, 'r');1
+            $fp = fopen($url, 'r');
             $fpw = fopen($save_path.''.$save_name, 'w');
             $size = 0;
 
@@ -46,8 +44,7 @@ class HttpDownloader implements Downloader
             fclose($fpw);
             
             $total_size += $size;
-            array_push($this->save_paths, $save_path.''.$save_name);
-        }
+        return $save_name;
     }
 
     public function getPath()
