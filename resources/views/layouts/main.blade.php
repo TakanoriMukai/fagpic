@@ -18,7 +18,7 @@
                     <div class="card-header"></div>
                     <div class="card-body">
                         <a href="{{$picture->url}}">
-                            <img class="card-img" src="{{$picture->url}}">{{$picture->url}}</img>
+                            <img class="card-img" src="{{config('gcp.storage_path','').''.$picture->file_path}}">{{$picture->file_path}}</img>
                         </a>
                     </div>
                 </div>
