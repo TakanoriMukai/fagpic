@@ -9,6 +9,7 @@
     <script src="https://code.jquery.com/jquery-3.4.0.min.js"
         integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
         crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{{ asset('js/loading.js') }}"></script>
     <script type="text/javascript" src="{{ asset('honoka/js/bootstrap.bundle.js') }}"></script>
 </head>
 <body>

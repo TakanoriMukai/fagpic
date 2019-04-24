@@ -25,7 +25,7 @@ class FagpicController extends Controller
         $tweets = (new Tweet)
             ->join('twitter_users', 'tweets.user_id','=','twitter_users.id')
             ->orderBy('tweets.id', 'desc')
-            ->paginate(10);
+            ->paginate(12);
 
         return view('layouts.main2',['tweets' => $tweets]);
     }
