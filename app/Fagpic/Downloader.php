@@ -4,5 +4,5 @@ namespace App\Fagpic;
 
 interface Downloader
 {
-    public function download(array $urls, string $save_path);
+    public function download(string $url, string $save_path);
 }

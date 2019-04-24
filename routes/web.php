@@ -11,6 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'FagpicController@main2');
+// Route::get('/main', 'FagpicController@main2');
+// Route::get('/main2', 'FagpicController@main2');
+
