@@ -58,15 +58,14 @@ class FagpicBatch
         if($res->new_tweet > 0)
         {
             $report_text = $report_text."\n結果は以下です。\n".
-                        '－－－－－－－－－－－－－'.
-                        ' * 収集Tweet数: '.$res->tweet_num."件の内、\n". 
-                        ' * 新規Tweet数: '.$res->new_tweet."件、\n".
-                        ' * 取得画像枚数: '.$res->url_count."枚、\n".
-                        ' * 新規Hashtag数: '.$res->new_tag."件 でした。\n";
+                        "－－－－－－－－－－－－－\n".
+                        ' * 新規Tweet数: '.$res->new_tweet."件\n".
+                        ' * 収集画像枚数: '.$res->url_count."枚\n".
+                        ' * 新規Hashtag数: '.$res->new_tag."件\n";
         }
         else
         {
-            $report_text = $report_text."\n収集画像数は 0枚でした。\n";
+            $report_text = $report_text."\n新しい画像はなかったです。\n";
         }
         $res = $reporter->report($report_text);
         Log::debug('      -> '.$report_text);
