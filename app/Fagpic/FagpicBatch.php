@@ -67,8 +67,15 @@ class FagpicBatch
         {
             $report_text = $report_text."\n新しい画像はなかったです。\n";
         }
-        $res = $reporter->report($report_text);
-        Log::debug('      -> '.$report_text);
+        if( config('app.env') === "production")
+        {
+            $res = $reporter->report($report_text);
+        }
+        else
+        {
+            $res = (object)array("status" => "This is local version.");
+        }
+        Log::debug("\n".$report_text);
         Log::debug('      -> '.json_encode($res));
         Log::debug('      -> complete!');
 
