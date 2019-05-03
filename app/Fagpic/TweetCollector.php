@@ -13,12 +13,17 @@ class TweetCollector
 {
     public function collect($statuses)
     {
+        $new_tweet = count($statuses);
+        $url_count = 0;
+        $new_tag = 0;
+
         // Modelに格納する。
         foreach( $statuses as $status )
         {
             // 登録済みのtweetであればスキップ
             if( $this->hasTweet($status['id']) )
             {
+                $new_tweet--;
                 Log::debug('       -> id: '.$status['id'].'は既に登録済みtweetのためスキップします。');
                 continue;
             }
@@ -55,6 +60,7 @@ class TweetCollector
                 $picture->failure_count = 0;
                 $picture->tweet_id = $status['id'];
                 $picture->save();
+                $url_count++;
             }
 
             // hashtags table
@@ -66,6 +72,7 @@ class TweetCollector
                     $hashtag = new TwitterHashtag;
                     $hashtag->tag_name = $tag;
                     $hashtag->save();
+                    $new_tag++;
                 }
             
                 // hashtag_relations table
@@ -76,6 +83,12 @@ class TweetCollector
                 $tag_relation->save();
             }
         }
+
+        return (object)array(
+            'tweet_num' => count($statuses),
+            'new_tweet' => $new_tweet,
+            'url_count' => $url_count,
+            'new_tag'   => $new_tag);
     }
     // tweetの存在チェック
     private function hasTweet($id)
