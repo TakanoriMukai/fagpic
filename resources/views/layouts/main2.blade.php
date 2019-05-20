@@ -8,6 +8,16 @@
 @endsection
 
 @section('content')
+
+<div class="row">
+    <form method="get" action="{{route('search')}}">
+        {{ csrf_field() }}
+        <input type="input" name="name">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+
 {{ $tweets->links() }}
 
 <div class="row">
