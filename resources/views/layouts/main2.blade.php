@@ -3,7 +3,9 @@
 
 @section('header')
 <nav class="navbar">
-    <div  class="navbar-brand"><a href='/'>Fagpic</a></div>
+    <!-- <div  class="navbar-brand"><a href='/'>Fagpic</a></div> -->
+    <!-- <div  class="navbar-brand"><img alt="Fagpic" src="{{ asset('/img/fagpic_logo1.png')}}"></div> -->
+    <a  class="navbar-brand" href='/'></a>
 </nav>
 @endsection
 

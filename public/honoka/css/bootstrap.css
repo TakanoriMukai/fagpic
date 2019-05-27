@@ -4166,7 +4166,8 @@ input[type="button"].btn-block {
   -ms-flex-pack: justify;
   justify-content: space-between;
   padding: 1.2rem 1.5rem;
-  background-color: #404040;
+  background-color: #FFFFFF;
+  border-bottom: thin solid #dddddd;
   /* filter: drop-shadow(0 0 0.75rem #DADAFF); */
 }
 
@@ -4182,7 +4183,7 @@ input[type="button"].btn-block {
   justify-content: space-between;
 }
 
-.navbar-brand {
+/* .navbar-brand {
   display: inline-block;
   padding-top: 0.3125rem;
   padding-bottom: 0.3125rem;
@@ -4190,6 +4191,14 @@ input[type="button"].btn-block {
   font-size: 1.25rem;
   line-height: inherit;
   white-space: nowrap;
+  background: url("/img/fagpic_logo1.png") no-repeat left center;
+} */
+.navbar-brand {
+  background: url("/img/fagpic_logo1.png") no-repeat left center;
+  background-size: contain;
+  display: inline-block;
+  height: 30px;
+  width: 200px;
 }
 
 .navbar-brand:hover, .navbar-brand:focus {
