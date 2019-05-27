@@ -9,11 +9,37 @@
 
 @section('content')
 
-<div class="row">
-    <form method="get" action="{{route('search')}}">
-        {{ csrf_field() }}
-        <input type="input" name="name">
-        <button type="submit" class="btn btn-primary">Submit</button>
+<div class="card-body">
+    <form class="form-inline" method="get" action="{{route('search')}}">
+        @csrf
+        <div class="form-group">
+            <input class="form-control" type="input" name="keyword" value={{$keyword}}>
+            <div class="radio">
+                <div class="input-group">
+                @if ($radio_checked === 'username')
+                    <label>
+                        <input type="radio" name="radios" value="username" checked>
+                        ユーザ名
+                    </label>
+                    　<label>
+                        <input type="radio" name="radios"value="acountname">
+                        アカウント名
+                    </label>
+                @elseif ($radio_checked === 'acountname')
+                    <label>
+                        <input type="radio" name="radios" value="username" >
+                        ユーザ名
+                    </label>
+                    　<label>
+                        <input type="radio" name="radios"value="acountname" checked>
+                        アカウント名
+                    </label>
+                @endif
+
+                </div>
+            </div>
+            <button class="btn btn-primary" type="submit" >Search</button>
+        </div>
     </form>
 </div>
 
@@ -22,7 +48,7 @@
 
 <div class="row">
 @foreach($tweets as $tweet)
-    <div class="col-lg-4">
+    <div class="col-lg-4 col-md-6">
         <div class="spinner-grow" role="status">
             <span class="sr-only">Loading...</span>
         </div>

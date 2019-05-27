@@ -29,27 +29,39 @@ class FagpicController extends Controller
             ->orderBy('tweets.id', 'desc')
             ->paginate(12);
 
-        return view('layouts.main2',['tweets' => $tweets]);
+        return view('layouts.main2',['tweets' => $tweets, 'radio_checked' => 'username', 'keyword' => '']);
     }
 
     /* 検索 */
     public function search(Request $request)
     {
-        $name = $request->input('name');
-        Log::debug('[HTTP REQUEST] search input:'.$name);
+        $keyword = $request->input('keyword');
+        Log::debug('[HTTP REQUEST] search input:'.$keyword);
+        $checked = $request->input('radios');
+        Log::debug('[HTTP REQUEST] search option1 checked:'.$checked);
 
         /* フォームが空白の場合はトップページにリダイレクト */
-        if($name === null)
+        if($keyword === null)
         {
             return redirect('/');
         }
 
-        $tweets = (new Tweet)
-            ->join('twitter_users', 'tweets.user_id','=','twitter_users.id')
-            ->where('name', $name)
-            ->orderBy('tweets.id', 'desc')
-            ->paginate(12);
-
-        return view('layouts.main2', ['tweets' => $tweets]);
+        if( $checked === 'acountname' )
+        {
+            // アカウント名（screen name）検索
+            $tweets = (new Tweet)
+                ->join('twitter_users', 'tweets.user_id','=','twitter_users.id')
+                ->where('screen_name', 'LIKE', "%{$keyword}%")
+                ->orderBy('tweets.id', 'desc')
+                ->paginate(12);
+        } else { 
+            // ユーザ名検索
+            $tweets = (new Tweet)
+                ->join('twitter_users', 'tweets.user_id','=','twitter_users.id')
+                ->where('name', 'LIKE', "%{$keyword}%")
+                ->orderBy('tweets.id', 'desc')
+                ->paginate(12);
+        }
+        return view('layouts.main2', ['tweets' => $tweets, 'radio_checked' => $checked, 'keyword' => $keyword]);
     }
 }
