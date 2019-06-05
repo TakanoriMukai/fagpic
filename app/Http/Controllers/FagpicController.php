@@ -11,16 +11,16 @@ use Illuminate\Support\Facades\Log;
 class FagpicController extends Controller
 {
     // 今は未使用
-    public function main()
-    {
-        $pictures = (new TwitterPicture)
-            ->join('tweets', 'tweet_id', '=', 'tweets.id')
-            ->join('twitter_users', 'tweets.user_id','=','twitter_users.id')
-            ->orderBy('tweet_id','desc')
-            ->get();    
+    // public function main()
+    // {
+    //     $pictures = (new TwitterPicture)
+    //         ->join('tweets', 'tweet_id', '=', 'tweets.id')
+    //         ->join('twitter_users', 'tweets.user_id','=','twitter_users.id')
+    //         ->orderBy('tweet_id','desc')
+    //         ->get();    
 
-        return view('layouts.main', ['pictures' => $pictures]);
-    }
+    //     return view('layouts.main', ['pictures' => $pictures]);
+    // }
 
     public function main2()
     {
@@ -29,7 +29,11 @@ class FagpicController extends Controller
             ->orderBy('tweets.id', 'desc')
             ->paginate(12);
 
-        return view('layouts.main2',['tweets' => $tweets, 'radio_checked' => 'username', 'keyword' => '']);
+        return view('layouts.main2',
+            ['tweets' => $tweets, 
+             'keyword' => '', 
+             'checkedUserName' => 'checked',
+             'checkedAccountName' => 'checked']);
     }
 
     /* 検索 */
@@ -37,17 +41,26 @@ class FagpicController extends Controller
     {
         $keyword = $request->input('keyword');
         Log::debug('[HTTP REQUEST] search input:'.$keyword);
-        $checked = $request->input('radios');
-        Log::debug('[HTTP REQUEST] search option1 checked:'.$checked);
+        $checkedUserName = $request->input('checkedUserName');
+        $checkedAccountName = $request->input('checkedAccountName');
+        Log::debug($checkedUserName);
+        Log::debug($checkedAccountName);
 
         /* フォームが空白の場合はトップページにリダイレクト */
-        if($keyword === null)
+        if(!$keyword)
         {
             return redirect('/');
         }
 
-        if( $checked === 'acountname' )
-        {
+        if( $checkedUserName && $checkedAccountName ) {
+            $tweets = (new Tweet)
+                ->join('twitter_users', 'tweets.user_id','=','twitter_users.id')
+                ->orWhere('screen_name', 'LIKE', "%{$keyword}%")
+                ->orWhere('name', 'LIKE', "%{$keyword}%")
+                ->orderBy('tweets.id', 'desc')
+                ->paginate(12);
+        }
+        else if ( $checkedAccountName ){
             // アカウント名（screen name）検索
             $tweets = (new Tweet)
                 ->join('twitter_users', 'tweets.user_id','=','twitter_users.id')
@@ -62,6 +75,9 @@ class FagpicController extends Controller
                 ->orderBy('tweets.id', 'desc')
                 ->paginate(12);
         }
-        return view('layouts.main2', ['tweets' => $tweets, 'radio_checked' => $checked, 'keyword' => $keyword]);
+        return view('layouts.main2', 
+        ['tweets' => $tweets,  'keyword' => $keyword, 
+         'checkedUserName' => $checkedUserName==='on' ? 'checked' : '' ,
+         'checkedAccountName' => $checkedAccountName==='on' ? 'checked': '']);
     }
 }

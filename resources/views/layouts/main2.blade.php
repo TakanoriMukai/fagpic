@@ -14,43 +14,30 @@
 <!-- <div class="card-body"> -->
 <div class="container">
     <div class="row">
-    <form class="form-inline col-12" method="get" action="{{route('search')}}">
+    <form class="form-group" method="get" action="{{route('search')}}">
         @csrf
-        <!-- <div class="form-group"> -->
-            <div class="search_container col-4">
+            <div class="search_container m-2">
                 <input type="text" name="keyword" value="{{$keyword}}" placeholder="Enter search keyword" >
                 <input type="submit" value="&#xf002">
             </div>
-            <div class="btn-group btn-group-toggle col-8" data-toggle="buttons">
-                <!-- <div class="input-group"> -->
-                @if ($radio_checked === 'username')
-                    <label class="btn btn-secondary active btn-sm">
-                        <input type="radio" name="radios" value="username" autocomplete="off" checked>
-                        User name
-                    </label>
-                    　<label class="btn btn-secondary btn-sm">
-                        <input type="radio" name="radios"value="acountname" autocomplete="off">
-                        Account name
-                    </label>
-                @elseif ($radio_checked === 'acountname')
-                    <label class="btn btn-secondary active btn-sm">
-                        <input type="radio" name="radios" value="username" autocomplete="off">
-                        User name
-                    </label>
-                    　<label class="btn btn-secondary btn-sm">
-                        <input type="radio" name="radios"value="acountname" autocomplete="off" checked>
-                        Account name
-                    </label>
-                @endif
-
-                <!-- </div> -->
+            <div class="form-check mx-3 my-1">
+                <input class="form-check-input" type="checkbox" name="checkedUserName" id="check1" {{$checkedUserName}}>
+                <label class="form-check-label" for="check1">User name</label>
             </div>
+            <div class="form-check mx-3 my-1">
+                <input class="form-check-input" type="checkbox" name="checkedAccountName" id="check2" {{$checkedAccountName}}>
+                <label class="form-check-label" for="check2">Account name</label>
+            </div>
+
             <!-- <button class="btn btn-primary btn-sm" type="submit" >Search</button> -->
         <!-- </div> -->
     </form>
     </div>
-
-    {{ $tweets->links() }}
+    <div class="row">
+        <div class="col-4">
+        {{ $tweets->onEachSide(2)->links() }}
+        </div>
+    </div>
     <div class="row">
     @foreach($tweets as $tweet)
         <div class="col-lg-4 col-md-6">
@@ -69,7 +56,7 @@
         </div>
     @endforeach
     </div>
-{{ $tweets->links() }}
+{{ $tweets->onEachSide(2)->links() }}
 </div>
 
 @endsection
