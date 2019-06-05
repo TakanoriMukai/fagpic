@@ -8,7 +8,7 @@ class TweetFetcher implements Fetcher
 {
     protected $tweet_object;
     protected $conn;
-    protected $filter = '#フレームアームズ・ガール filter:images -RT';
+    protected $filter = '#フレームアームズ・ガール filter:images -RT -KOU02342239';
 
     public function __construct($consumer_key, $consumer_secret)
     {
