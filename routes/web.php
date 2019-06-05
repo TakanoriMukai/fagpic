@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'FagpicController@main2');
+Route::get('/search', 'FagpicController@search')->name("search");
 // Route::get('/main', 'FagpicController@main2');
 // Route::get('/main2', 'FagpicController@main2');
 
