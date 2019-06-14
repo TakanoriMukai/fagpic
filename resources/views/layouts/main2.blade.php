@@ -35,7 +35,7 @@
     </div>
     <div class="row">
         <div class="col-4">
-        {{ $tweets->onEachSide(2)->links() }}
+        {{ $tweets->appends(['keyword' => $keyword, 'checkedUserName' => $checkedUserName, 'checkedAccountName' => $checkedAccountName])->onEachSide(2)->links() }}
         </div>
     </div>
     <div class="row">
@@ -56,7 +56,7 @@
         </div>
     @endforeach
     </div>
-{{ $tweets->onEachSide(2)->links() }}
+{{ $tweets->appends(['keyword' => $keyword, 'checkedUserName' => $checkedUserName, 'checkedAccountName' => $checkedAccountName])->onEachSide(2)->links() }}
 </div>
 
 @endsection
