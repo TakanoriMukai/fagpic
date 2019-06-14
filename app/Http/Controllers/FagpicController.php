@@ -40,11 +40,9 @@ class FagpicController extends Controller
     public function search(Request $request)
     {
         $keyword = $request->input('keyword');
-        Log::debug('[HTTP REQUEST] search input:'.$keyword);
         $checkedUserName = $request->input('checkedUserName');
         $checkedAccountName = $request->input('checkedAccountName');
-        Log::debug($checkedUserName);
-        Log::debug($checkedAccountName);
+        Log::debug('[HTTP REQUEST] search input:'.$keyword.' checkedUserName:'.$checkedUserName.' checkedAccountName:'.$checkedAccountName);
 
         /* フォームが空白の場合はトップページにリダイレクト */
         if(!$keyword)
@@ -75,9 +73,17 @@ class FagpicController extends Controller
                 ->orderBy('tweets.id', 'desc')
                 ->paginate(12);
         }
+
+        if($checkedUserName==='on'){
+            $checkedUserName = 'checked';
+        }
+        if($checkedAccountName==='on'){
+            $checkedAccountName = 'checked';
+        }
+
         return view('layouts.main2', 
         ['tweets' => $tweets,  'keyword' => $keyword, 
-         'checkedUserName' => $checkedUserName==='on' ? 'checked' : '' ,
-         'checkedAccountName' => $checkedAccountName==='on' ? 'checked': '']);
+         'checkedUserName' => $checkedUserName==='checked' ? 'checked' : '' ,
+         'checkedAccountName' => $checkedAccountName==='checked' ? 'checked': '']);
     }
 }
