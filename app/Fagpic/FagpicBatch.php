@@ -16,6 +16,7 @@ class FagpicBatch
     {
         $fetcher = new TweetFetcher(config('twitter.consumer_key'),
                                     config('twitter.consumer_secret'));
+        $fetcher->setFilter(config('twitter.search_filter'));
         $parser = new TweetParser();
         $collector = new TweetCollector();
         $downloader = new HttpDownloader();
@@ -23,7 +24,14 @@ class FagpicBatch
         $dl_count = 0;
 
         Log::debug('fetch() start');
-        $fetcher->fetch();
+        Log::debug('     -> search_filter:'.$fetcher->getFilter());
+        try{
+            $fetcher->fetch();
+        } catch (\Exception $e){
+            Log::debug('     -> '.$e->getMessage());
+            Log::debug('     -> failed..');
+            return;
+        }
         Log::debug('     -> complete! '.count($fetcher->getTweetObject()->statuses).' tweets fetched.' );
 
         Log::debug('parse() start');

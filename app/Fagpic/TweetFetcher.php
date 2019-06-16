@@ -8,7 +8,7 @@ class TweetFetcher implements Fetcher
 {
     protected $tweet_object;
     protected $conn;
-    protected $filter = '#フレームアームズ・ガール filter:images -RT -KOU02342239';
+    protected $filter;
 
     public function __construct($consumer_key, $consumer_secret)
     {
@@ -18,13 +18,22 @@ class TweetFetcher implements Fetcher
     /*  最新のツイートを取得する。 */
     public function fetch()
     {
-        $this->tweet_object = $this->conn->get("search/tweets", ["q" => $this->filter]);
+        try{
+            $this->tweet_object = $this->conn->get("search/tweets", ["q" => $this->filter]);
+        } catch(\TwitterOAuthException $e) {
+            throw $e;
+        }
     }
 
     /* 検索フィルタを設定する。 */
     public function setFilter(string $filter)
     {
         $this->filter = $filter;
+    }
+
+    public function getFilter()
+    {
+        return $this->filter;
     }
 
     public function getTweetObject()
