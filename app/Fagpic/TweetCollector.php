@@ -29,15 +29,10 @@ class TweetCollector
             }
 
             // tweet_users table
-            if( !$this->hasUser($status['user_id']) )
-            {
-                // 未登録のTwitterユーザであれば追加
-                $tweet_user = new TwitterUser;
-                $tweet_user->id = $status['user_id'];
-                $tweet_user->name = $status['name'];
-                $tweet_user->screen_name = $status['screen_name'];
-                $tweet_user->save();
-            }
+            $this->shouldAddUser($status['user_id'], $status['name'], $status['screen_name']);
+
+            // tweet_users table name,screen_nameが更新されていた場合反映する
+            $this->shouldUpdateUser($status['user_id'], $status['name'], $status['screen_name']);
 
             // tweets table
             $tweet = new Tweet;
@@ -106,5 +101,41 @@ class TweetCollector
     private function hasHashtag($hashtag)
     {
         return TwitterHashtag::where('tag_name', $hashtag)->count() > 0;
+    }
+
+    // nameが更新されているかチェック
+    private function isSameName($id, $name)
+    {
+        return (TwitterUser::where('id', $id)->select('name')->first())['name'] === $name;
+    }
+
+    // screen_nameが更新されているかチェック
+    private function isSameScreenName($id, $screen_name)
+    {
+        return (TwitterUser::where('id', $id)->select('screen_name')->first())['screen_name'] === $screen_name;
+    }
+
+    private function shouldAddUser($id, $name, $screen_name)
+    {
+        if( !$this->hasUser($id) )
+        {
+            // 未登録のTwitterユーザであれば追加
+            $tweet_user = new TwitterUser;
+            $tweet_user->id = $id;
+            $tweet_user->name = $name;
+            $tweet_user->screen_name = $screen_name;
+            $tweet_user->save();
+        }
+    }
+
+    private function shouldUpdateUser($id, $name, $screen_name)
+    {
+        if( !$this->isSameName($id, $name) || 
+        !$this->isSameScreenName($id, $screen_name) )
+        {
+            TwitterUser::where('id', $id)
+                ->update(['name' => $name, 'screen_name' => $screen_name]);
+            Log::debug('       -> id: '.$id.'を更新しました。name:'.$name.' screen_name:'.$screen_name );
+        }
     }
 }

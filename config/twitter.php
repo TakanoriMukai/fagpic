@@ -6,4 +6,5 @@ return [
     'access_token' => env('TWITTER_ACCESS_TOKEN', ''),
     'access_token_secret' => env('TWITTER_ACCESS_TOKEN_SECRET', ''),
     'callback_url' => env('TWITTER_CALLBACK_URL', ''),
+    'search_filter' => env('TWITTER_SEARCH_FILTER', ''),
 ];
